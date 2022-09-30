@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			html, body {
+				margin: 0;
+				padding: 0;
+				width: 100%;
+				font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+				color: white;
+			}
+
+			:root {
+				--w-user-icon: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyB2aWV3Qm94PSItMyAtMiA4NyA5OS41IiB3aWR0aD0iODciIGhlaWdodD0iOTkuNSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cGF0aCBkPSJNIDY4LjUgMjkgQyA2OC41IDQ0LjQ2NCA1NS45NjQgNTcgNDAuNSA1NyBDIDI1LjAzNiA1NyAxMi41IDQ0LjQ2NCAxMi41IDI5IEMgMTIuNSAxMy41MzYgMjUuMDM2IDEgNDAuNSAxIEMgNTUuOTY0IDEgNjguNSAxMy41MzYgNjguNSAyOSBaIE0gMCA5Ny41IEMgMCA3NSAxOCA1NyA0MC41IDU3IEMgNjMgNTcgODEgNzUgODEgOTcuNSIgc3R5bGU9ImZpbGw6IG5vbmU7IHN0cm9rZS13aWR0aDogNnB4OyBzdHJva2U6IHJnYigwLCAwLCAwKTsiLz4KPC9zdmc+");
+			}
+
+			.main-container {
+				width: 100vw;
+				height: 100vh;
+				box-sizing: border-box;
+				font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+				color: #fff;
+				display: flex;
+				align-items: center;
+				user-select: none;
+				background: #0f0e0d;
+				overflow: hidden;
+			}
+
+			/* .background {
+				width: 100%;
+				height: 100%;
+				position: absolute;
+				top: 0;
+				left: 0;
+				background-image: url("./src/bg_hole.png");
+				background-size: 100% 100%;
+				background-repeat: no-repeat;
+				z-index: -1;
+				user-select: none;
+			}
+
+			.background::after {
+				content: "";
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				backdrop-filter: blur(20px);
+				user-select: none;
+			} */
+
+			.main-container *:focus-visible {
+				outline: 2px solid white;
+			}
+			
+			.top-panel {
+				width: 100%;
+				text-align: center;
+				box-sizing: border-box;
+			}
+			
+			.top-panel > * {
+				user-select: none;
+				margin-inline: auto;
+			}
+			
+			.main-icon {
+				width: 192px;
+				height: 192px;
+				border-radius: 100%;
+				margin-bottom: 17px;
+				background: #abadad;
+				overflow: hidden;
+			}
+
+			.main-icon::before {
+				content: '';
+				width: 100%;
+				height: 100%;
+				display: block;
+				background: #404040;
+				mask-image: var(--w-user-icon);
+				mask-repeat: no-repeat;
+				mask-position: center;
+				mask-size: 45%;
+			}
+			
+			.account-name {
+				font-size: 37px;
+				font-weight: 300;
+				margin-bottom: 40px;
+			}
+			
+			.edit-box-container {
+				margin-bottom: 20px;
+				border: 2px solid #ffffff66;
+				width: 300px;
+				height: 32px;
+			}
+
+			.edit-box-container:hover {
+				border: 2px solid #fff;
+			}
+			
+			.edit-box {
+				-webkit-appearance: none;
+				-moz-appearance: none;
+				appearance: none;
+				outline: none !important;
+				border: none;
+
+				padding: 0 40px 0 8px;
+				font-size: 15px;
+				text-align: left;
+				width: calc(100% - 79px);
+				height: 100%;
+				float: left;
+
+				background: #00000033;
+				color: #fff
+			}
+
+			.edit-box:focus {
+				background: #fff;
+				color: #000;
+			}
+			
+			.go-button {
+				width: 31px;
+				height: 100%;
+				background: #ffffff44;
+				float: right;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+
+			.go-button::before {
+				content: '';
+				width: 15px;
+				height: 15px;
+				display: block;
+				background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNC4yIDE0LjciIHdpZHRoPSIxNSIgaGVpZ2h0PSIxNSI+PHBhdGggZD0iTSA3IDE0LjM1IEwgMTMuNSA3LjM1IEwgNyAwLjM1IE0gMCA3LjM1IEwgMTMuNSA3LjM1IiBzdHlsZT0iZmlsbDogbm9uZTsgc3Ryb2tlOiB3aGl0ZTsiLz48L3N2Zz4=");
+				background-repeat: no-repeat;
+				background-position: center;
+				background-size: cover;
+				transition: transform .5s ease;
+			}
+
+			.go-button:hover:active {
+				background: #ffffff77;
+			}
+
+			.go-button:hover:active::before {
+				transform: scale(.9);
+				transition: transform .1s ease;
+			}
+			
+			.reset-password {
+				margin-bottom: 30px;
+				width: fit-content;
+				height: 20px;
+				color: #c8c8c8;
+			}
+			
+			.reset-password:hover {
+				cursor: pointer;
+				color: #8d8d8d;
+			}
+
+			.reset-password:hover:active {
+				color: #797979;
+			}
+
+			.accounts-container {
+				position: absolute;
+				font-size: 16px;
+				bottom: 30px;
+				left: 25px;
+			}
+
+			.accounts-container > div {
+				width: calc(100% + 15px);
+				height: 56px;
+			}
+
+			.accounts-container > div.selected {
+				background: #0a67b1b3;
+			}
+			
+			.accounts-container > div.selected:hover {
+				background: linear-gradient(90deg, #0a67b1 0%, #1f74b7 50%, #0a67b1 100%);
+				background-size: 200% 100%;
+			}
+
+			.accounts-container > div:hover {
+				background: linear-gradient(90deg, #ffffff17 0%, #ffffff33 50%, #ffffff17 100%);
+				background-size: 200% 100%;
+			}
+
+			.accounts-container > div > div {
+				display: flex;
+				align-items: center;
+				height: 100%;
+				width: 100%;
+			}
+
+			.accounts-container > div > div:before {
+				display: block;
+				content: '';
+				width: 48px;
+				height: 48px;
+				border-radius: 100%;
+				background: #e6e6e6;
+				background-image: var(--w-user-icon);
+				background-repeat: no-repeat;
+				background-position: center;
+				background-size: 45%;
+				margin-inline: 12px;
+			}
+			
+			.icons-container {
+				position: absolute;
+				bottom: 22px;
+				right: 25px;
+			}
+
+			.icons-container > div {
+				width: 50px;
+				height: 50px;
+				float: left;
+			}
+
+			.icons-container > div > div {
+				width: 100%;
+				height: 100%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				transition: transform .5s ease;
+			}
+			
+			/* cosmetic */
+			.icons-container > div:nth-last-child(1) > * {
+				margin-left: 1px;
+				margin-top: 1px;
+			}
+
+			/* cosmetic */
+			.icons-container > div:nth-last-child(2) > * {
+				margin-left: 3px;
+				margin-top: 1px;
+			}
+
+			/* cosmetic */
+			.icons-container > div:nth-last-child(3) > * {
+				margin-left: 5px;
+				margin-top: 1px;
+			}
+
+			.icons-container:not(:active) > div:hover > * {
+				background: #ffffff33;
+			}
+
+			.icons-container > div:hover:active > * {
+				background: #ffffff66;
+				transform: scale(.97);
+				transition: transform 0.1s ease;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div class="main-container">
+			<div class="background"></div>
+			<div class="top-panel">
+				<div class="main-icon"></div>
+				<div class="account-name">
+					Account 1
+				</div>
+				<div class="edit-box-container">
+					<input type="password" class="edit-box" placeholder="Password" maxlength="127" tabindex="0">
+					<div class="go-button" tabindex="0"></div>
+				</div>
+				<div class="reset-password" tabindex="0">
+					Reset password
+				</div>
+			</div>
+			<div class="accounts-container">
+				<div class="selected" tabindex="0">
+					<div>Account 1</div>
+				</div>
+				<div tabindex="0">
+					<div>Other user</div>
+				</div>
+			</div>
+			<div class="icons-container">
+				<div tabindex="0">
+					<div>
+						<svg viewBox="0 0 30 22" width="30" height="22" xmlns="http://www.w3.org/2000/svg">
+							<path d="M 8 1 L 29 1 L 29 16 L 4.5 16 M 16 16 L 16 21 M 23 21 L 9 21 M 4.5 22 L 4.5 10 M 4.5 7.5 L 4.5 4.5 M 1 4.5 L 8 4.5 M 1 1 L 8 1 L 8 10 L 1 10 L 1 1 Z" style="stroke: white; fill: none; stroke-width: 2px;" />
+						</svg>
+					</div>
+				</div>
+				<div tabindex="0">
+					<div>
+						<svg viewBox="0 0 30 26.5" width="30" height="27" xmlns="http://www.w3.org/2000/svg">
+							<path d="M 1 13.25 C 1.205 10.92 2.121 8.794 3.529 7.089 M 4.935 5.666 C 6.717 4.154 8.977 3.188 11.456 3.025 M 23.431 15 C 23.268 17.479 22.301 19.739 20.79 21.521 M 19.367 22.927 C 17.602 24.385 15.384 25.315 12.956 25.475 M 10.956 25.431 C 8.637 25.175 6.53 24.214 4.855 22.766 M 3.463 21.33 C 2.092 19.639 1.202 17.543 1 15.25 M 13.927 12 L 13.927 0 L 13.927 12 Z M 20.966 12.35 L 26.366 12.35 L 20.966 12.35 Z" style="fill: none; stroke-width: 2px; stroke: white;" />
+							<path d="M 13.95 15.35 L 9.95 11.35 L 17.95 11.35 L 13.95 15.35 Z M 20.966 11.35 L 20.966 13.35 L 19 13.35 L 20.966 11.35 Z M 29.956 12.35 L 25.956 16.35 L 25.956 8.35 L 29.956 12.35 Z" style="fill: white;" />
+						</svg>
+					</div>
+				</div>
+				<div tabindex="0">
+					<div>
+						<svg viewBox="0 0 26 30" width="26" height="30" xmlns="http://www.w3.org/2000/svg">
+							<path d="M 17.067 5.675 C 21.692 7.34 25 11.764 25 16.96 C 25 23.583 19.627 28.953 13 28.953 C 6.373 28.953 1 23.583 1 16.96 C 1 11.742 4.336 7.301 8.993 5.65 M 12.993 15.119 L 12.993 0 L 12.993 15.119 Z" style="stroke: white; fill: none; stroke-width: 2px;"/>
+						</svg>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			(function () {
+				let decode = _ => {
+					let a = "";
+					for (b of _.match(/[^.]+/g).map(_ => +_)) {
+						for (c = 0x3f; b; b >>>= 0x6)
+							a += String.fromCharCode(c + (b & c));
+					}
+					return a;
+				}
+
+				let max = (a,b) => a > b ? a : b;
+				let abs = _ => _ < -`` ? -_ : _;
+				let map = (css, fun) => [...document.querySelectorAll(css)].map(fun)
+				let choose = e => e.parentElement.className.includes("-") ? e : choose(e.parentElement);
+
+				window._ = undefined;
+
+				let tf_on = e => {
+					if (~e.buttons & 1 || !_) return;
+					let rect = choose(_).getBoundingClientRect(), y = e.y - rect.y, x = e.x - rect.x;
+					dist = (x, y, r) => max(abs((x - r.width / 2) / r.width), abs((y - r.height / 2) / r.height));
+					_.style.transform = `perspective(400px) rotate3d(${-(y / rect.height - .5)}, ${x / rect.width - .5}, 0, ${dist(x, y, rect) * 30}deg) scale(.97)`;
+					_.style.transition = `transform .1s ease`;
+				}
+
+				let tf_off = e => {
+					if (!_) return;
+					_.style.transform = "";
+					_.style.transition = `transform .5s ease`;
+				}
+				
+				map(".accounts-container > div", ele => {
+					ele.onmousemove = (e) => {
+						let r = choose(e.target).getBoundingClientRect();
+						let p = 1e2 - (e.clientX - r.x) / r.width * 1e2;
+						choose(e.target).style.backgroundPositionX = p + "%";
+					}
+				})
+
+				map(".icons-container > div, .accounts-container > div", ele => {
+					ele.onmousedown = (e) => {
+						_ = choose(e.target).children[0];
+						tf_on(e);
+					};
+					ele.onmouseup = (e) => {
+						tf_off(e);
+						_ = undefined;
+					};
+					ele.onmouseenter = tf_on;
+					ele.onmouseleave = tf_off;
+				})
+			})();
+		</script>
+		<!--
+		<script>
+			function encode(str) {
+				let nums = [];
+				str = str.split("").reverse().join("");
+				let strs = str.match(/[@-~]{1,5}/g) || [];
+				for (let s of strs) {
+					let num = 0;
+					for (let i = 0; i < s.length; i++) {
+						let charCode = s.charCodeAt(i) - 63;
+						let bits = charCode & 63;
+						num = num | bits << (s.length - 1 - i) * 6
+					}
+					nums.push(num.toString());
+				}
+				return nums.reverse().join(".");
+			}
+
+			function decode(strnum) {
+				let str = "";
+				for (num of strnum.match(/[^.]+/g).map(_=>+_)) {
+					while (num) {
+						str += String.fromCharCode(63 + (num & 63));
+						num = num >>> 6;
+					}
+				}
+				return str;
+			}
+		</script>
+		-->
+	</body>
+</html>
