@@ -24,6 +24,7 @@
 				align-items: center;
 				user-select: none;
 				background: #0f0e0d;
+				/* background: #c4c4c4; */
 				overflow: hidden;
 			}
 
@@ -182,6 +183,9 @@
 			.accounts-container > div {
 				width: calc(100% + 15px);
 				height: 56px;
+				--x: 0%;
+				--y: 0%;
+				--n: 1px;
 			}
 
 			.accounts-container > div.selected {
@@ -191,11 +195,27 @@
 			.accounts-container > div.selected:hover {
 				background: linear-gradient(90deg, #0a67b1 0%, #1f74b7 50%, #0a67b1 100%);
 				background-size: 200% 100%;
+				background-position-x: var(--x);
 			}
 
 			.accounts-container > div:hover {
 				background: linear-gradient(90deg, #ffffff17 0%, #ffffff33 50%, #ffffff17 100%);
 				background-size: 200% 100%;
+				background-position-x: var(--x);
+			}
+
+			.accounts-container > div:hover::before {
+				content: '';
+				position: absolute;
+				width: calc(100% + 15px);
+				height: 56px;
+				background: #ffffff4d;
+				mask-image: radial-gradient(black, transparent 50%);
+				mask-position: 100%;
+				clip-path: polygon(0 0, 0 100%, var(--n) 100%, var(--n) var(--n), calc(100% - var(--n)) var(--n), calc(100% - var(--n)) calc(100% - var(--n)), var(--n) calc(100% - var(--n)), var(--n) 100%, 100% 100%, 100% 0);
+				mask-size: 200% 200%;
+				mask-repeat: no-repeat;
+				mask-position: var(--x) var(--y);
 			}
 
 			.accounts-container > div > div {
@@ -240,30 +260,30 @@
 				transition: transform .5s ease;
 			}
 			
-			/* cosmetic */
+			/* for realism */
 			.icons-container > div:nth-last-child(1) > * {
 				margin-left: 1px;
 				margin-top: 1px;
 			}
 
-			/* cosmetic */
+			/* for realism */
 			.icons-container > div:nth-last-child(2) > * {
 				margin-left: 3px;
 				margin-top: 1px;
 			}
 
-			/* cosmetic */
+			/* for realism */
 			.icons-container > div:nth-last-child(3) > * {
 				margin-left: 5px;
 				margin-top: 1px;
 			}
 
 			.icons-container:not(:active) > div:hover > * {
-				background: #ffffff33;
+				background: rgba(255, 255, 255, 12%);
 			}
 
 			.icons-container > div:hover:active > * {
-				background: #ffffff66;
+				background: rgba(255, 255, 255, 38%);
 				transform: scale(.97);
 				transition: transform 0.1s ease;
 			}
@@ -354,8 +374,10 @@
 				map(".accounts-container > div", ele => {
 					ele.onmousemove = (e) => {
 						let r = choose(e.target).getBoundingClientRect();
-						let p = 1e2 - (e.clientX - r.x) / r.width * 1e2;
-						choose(e.target).style.backgroundPositionX = p + "%";
+						let x = 1e2 - (e.clientX - r.x) / r.width * 1e2;
+						let y = 1e2 - (e.clientY - r.y) / r.height * 1e2;
+						choose(e.target).style.setProperty("--x", x + "%");
+						choose(e.target).style.setProperty("--y", y + "%");
 					}
 				})
 
